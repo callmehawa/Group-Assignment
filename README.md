@@ -13,7 +13,7 @@ Demonstration of simple client server network and how a string can be serialised
 
 ## Contributing
 Group C end of module assignment
-Pull request accepted.
+Pull request accepted
 
 ## License
 
