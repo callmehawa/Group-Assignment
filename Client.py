@@ -15,4 +15,3 @@ dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
 
 json_data = json.dumps(dictionary)
 print(json_data)
-
