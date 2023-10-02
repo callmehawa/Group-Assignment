@@ -4,7 +4,8 @@
 before sending it to the server"""
 
 import socket
-
+import json
+import pickle
 
 # Create a socket object
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,7 +18,16 @@ client_socket.connect(server_address)
 
 try:
     # Send data to the server
-    message = "Hello, server!"
+    #message = "Hello, server!"
+
+    # Add  a new dictionary
+    dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
+
+    # Serialize as JSON
+    json_data = json.dumps(dictionary)
+
+    #send serialised dictionary to server
+
     client_socket.send(message.encode('utf-8'))
 
     # Receive a response from the server
@@ -27,23 +37,4 @@ finally:
     # Clean up the connection
     client_socket.close()
 
-
-
-import json
-import pickle
-
-# Create an empty dictionary
-my_dict = {}
-
-# Create a dictionary with key-value pairs
-dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
-
-#serialse my_dict to json format
-
-#json_data = json.dumps(dictionary)
-#print(json_data)
-
-# Serialize the dictionary using pickle
-with open("serialized_dict.pickle", "wb") as pickle_file:
-    pickle.dump(dictionary, pickle_file)
-    print(dictionary)
+# End-of-file (EOF)
