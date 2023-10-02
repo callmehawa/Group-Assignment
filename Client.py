@@ -28,7 +28,7 @@ try:
 
     #send serialised dictionary to server
 
-    client_socket.send(message.encode('utf-8'))
+    client_socket.send(json_data.encode('utf-8'))
 
     # Receive a response from the server
     response = client_socket.recv(1024)
