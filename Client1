@@ -1,11 +1,6 @@
-
-#Client sevrer Network
-"""Creating a client for a simple client server network which will serialise and ncrypt a string 
-before sending it to the server"""
-
 import socket
-import json
 import pickle
+from cryptography.fernet import Fernet
 
 # Create a socket object
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,34 +11,57 @@ server_address = ('localhost', 12345)
 # Connect to the server
 client_socket.connect(server_address)
 
-# Create a dictionary with key-value pairs
-dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
+def write_key():
+    """
+    Generating a key and saving it into a file
+    """
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:
+        key_file.write(key)
+
+def load_key():
+    """
+    Loading the key from the current directory named `key.key`
+    """
+    return open("key.key", "rb").read()
+
+# Generate and write a new key
+write_key()
+
+# Load the previously generated key
+key = load_key()
 
 try:
-    #serialse my_dict to json format
-    json_data = json.dumps(dictionary)
-    # Send data to the server
-    client_socket.send(json_data.encode('utf-8'))
-    #client_socket.send(message)
+    # Add a new dictionary
+    dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
+
+    # Create a file to serialize into pickle
+    with open('dict.pickle', 'wb') as file:
+        pickle.dump(dictionary, file)
+
+    # Read the serialized data from the file
+    with open('dict.pickle', 'rb') as file:
+        serialised_data = file.read()
+
+    def encrypt(data, key):
+        """
+        Given data (bytes) and key (bytes), it encrypts the data and returns it
+        """
+        f = Fernet(key)
+        encrypted_data = f.encrypt(data)
+        return encrypted_data
+
+    # Encrypt the serialized data
+    encrypted_data = encrypt(serialised_data, key)
+
+    # Send encrypted data to the server
+    client_socket.send(encrypted_data)
+
     # Receive a response from the server
     response = client_socket.recv(1024)
-    print("Received response from server: {}".format(response.decode('utf-8')))
+    print(f"Received from server: {response.decode('utf-8')}")
+
+
 finally:
     # Clean up the connection
     client_socket.close()
-
-
-
-# Create an empty dictionary
-#my_dict = {}
-
-# Create a dictionary with key-value pairs
-#dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
-
-
-#print(json_data)
-
-# Serialize the dictionary using pickle
-#with open("serialized_dict.pickle", "wb") as pickle_file:
-    #pickle.dump(dictionary, pickle_file)
-   # print(dictionary)
