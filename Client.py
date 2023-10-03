@@ -37,11 +37,11 @@ write_key()
 
 # Load the previously generated key
 key = load_key()
-print(f"Fernet Key: {key.hex()}")
+#print(f"Fernet Key: {key.hex()}")
 
 # Call the print_key function to print the key
 load_key()
-write_key()
+#write_key()
 
 try:
     # Add a new dictionary
@@ -80,6 +80,14 @@ try:
     response = client_socket.recv(1024)
     print(f"Message from server: {response.decode('utf-8')}")
 
+except Exception as e:
+    """
+    try-except block to handle excpetion and print error message
+    """
+    print(f"An error occurred: {e}")
+    sys.exit(1)
+
 finally:
     # Clean up the connection
     client_socket.close()
+
