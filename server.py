@@ -21,7 +21,7 @@ try:
     print("Received data: {}".format(data.decode('utf-8')))
 
     # Send a response back to the client
-    response = "Hello, dicitionary received!"
+    response = "Hello, client!"
     client_socket.send(response.encode('utf-8'))
 finally:
     # Clean up the connection
