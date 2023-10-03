@@ -11,17 +11,21 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest  # Use the latest version of Windows as the runner
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Check out your repository's code
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.11  # Specify the Python version you want to use
+          python-version: 3.11
 
+      - name: Install dependencies
+        run: |
+          #pip install -r requirements.txt  # Install your project's dependencies
+          pip install cryptography        # Install the 'cryptography' module
 
       - name: Run unit tests
-        run: python -m unittest unit_test_client.py  # Replace with the correct path to your test file
+        run: python -m unittest unit_test_client.py
