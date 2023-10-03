@@ -30,6 +30,10 @@ try:
     decrypted_data = f.decrypt(encrypted_data)
     print("Decryption successful.")
 
+    # Print the decrypted data
+    #print("Decrypted data:", decrypted_data.decode('utf-8'))
+    print("Decrypted data as bytes:", decrypted_data)
+
     # Save the decrypted data to a file
     with open('decrypted_dict.pickle', 'wb') as file:
         file.write(decrypted_data)
@@ -39,8 +43,10 @@ try:
     # Send a response back to the client
     response = "Received and decrypted data successfully."
     client_socket.send(response.encode('utf-8'))
+
 except Exception as e:
     print("Decryption failed:", e)
+
 finally:
     # Clean up the connection
     client_socket.close()
