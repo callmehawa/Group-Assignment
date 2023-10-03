@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-import Clientnew
+import Client
 
 class TestClient(unittest.TestCase):
 
@@ -27,16 +27,16 @@ class TestClient(unittest.TestCase):
         receive_response_mock = mock.MagicMock(return_value="Connection successful")
 
         # Replace the functions and methods in the Client module with the mocks
-        Clientnew.create_client_socket = create_client_socket_mock
-        Clientnew.connect_to_server = connect_to_server_mock
-        Clientnew.write_key = write_key_mock
-        Clientnew.load_key = load_key_mock
-        Clientnew.encrypt = encrypt_mock
-        Clientnew.send_encrypted_data = mock.MagicMock()
-        Clientnew.receive_response = receive_response_mock
+        Client.create_client_socket = create_client_socket_mock
+        Client.connect_to_server = connect_to_server_mock
+        Client.write_key = write_key_mock
+        Client.load_key = load_key_mock
+        Client.encrypt = encrypt_mock
+        Client.send_encrypted_data = mock.MagicMock()
+        Client.receive_response = receive_response_mock
 
         # Call the main function
-        Clientnew.main()
+        Client.main()
 
         # Assertions to verify that functions and methods were called with the expected arguments
         create_client_socket_mock.assert_called_once()
