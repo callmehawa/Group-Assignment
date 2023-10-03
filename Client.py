@@ -13,13 +13,10 @@ client_socket.connect(server_address)
 
 def write_key():
     """
-<<<<<<< HEAD
     Generate a cryptographic key and save it to a file.
 
     This function generates a Fernet key and saves it to a file named 'key.key' in binary format.
-=======
     Generating a key and saving it into a file
->>>>>>> aa1387a7156746feb3b324a8ccf30afdd7193c68
     """
     key = Fernet.generate_key()
     with open("key.key", "wb") as key_file:
@@ -27,14 +24,11 @@ def write_key():
 
 def load_key():
     """
-<<<<<<< HEAD
     Load the cryptographic key from the 'key.key' file.
 
     Returns:
         bytes: The Fernet key loaded from the 'key.key' file.
-=======
     Loading the key from the current directory named `key.key`
->>>>>>> aa1387a7156746feb3b324a8ccf30afdd7193c68
     """
     return open("key.key", "rb").read()
 
@@ -46,11 +40,8 @@ key = load_key()
 print(f"Fernet Key: {key.hex()}")
 
 # Call the print_key function to print the key
-<<<<<<< HEAD
 load_key()
-=======
 write_key()
->>>>>>> aa1387a7156746feb3b324a8ccf30afdd7193c68
 
 try:
     # Add a new dictionary
@@ -66,7 +57,6 @@ try:
 
     def encrypt(data, key):
         """
-<<<<<<< HEAD
         Encrypt data using a Fernet key.
 
         Args:
@@ -75,9 +65,6 @@ try:
 
         Returns:
             bytes: The encrypted data.
-=======
-        Given data (bytes) and key (bytes), it encrypts the data and returns it
->>>>>>> aa1387a7156746feb3b324a8ccf30afdd7193c68
         """
         f = Fernet(key)
         encrypted_data = f.encrypt(data)
@@ -93,13 +80,6 @@ try:
     response = client_socket.recv(1024)
     print(f"Message from server: {response.decode('utf-8')}")
 
-<<<<<<< HEAD
 finally:
     # Clean up the connection
     client_socket.close()
-=======
-
-finally:
-    # Clean up the connection
-    client_socket.close()
->>>>>>> aa1387a7156746feb3b324a8ccf30afdd7193c68

@@ -1,1 +1,1 @@
-This is a sample requirement file 
+Install Cyrptography - This will be required to use Fernet key for encrypting the file.
