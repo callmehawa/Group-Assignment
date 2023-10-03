@@ -1,10 +1,5 @@
-#Client sevrer Network
-"""Creating a client for a simple client server network which will serialise and ncrypt a string 
-before sending it to the server"""
-
 import socket
 import pickle
-#import json
 from cryptography.fernet import Fernet
 
 # Create a socket object
@@ -16,41 +11,61 @@ server_address = ('localhost', 12345)
 # Connect to the server
 client_socket.connect(server_address)
 
-# Generate a key for encryption (you should store and share this key securely)
-key = Fernet.generate_key()
-cipher_suite = Fernet(key)
-print(key)
+def write_key():
+    """
+    Generating a key and saving it into a file
+    """
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as key_file:
+        key_file.write(key)
+
+def load_key():
+    """
+    Loading the key from the current directory named `key.key`
+    """
+    return open("key.key", "rb").read()
+
+# Generate and write a new key
+write_key()
+
+# Load the previously generated key
+key = load_key()
+print(f"Fernet Key: {key.hex()}")
+
+# Call the print_key function to print the key
+write_key()
 
 try:
-    # Send data to the server
-    #message = "Hello, server!"
-
-    # Add  a new dictionary
+    # Add a new dictionary
     dictionary = {"name": "Pawan", "age": 40, "city": "Preston"}
 
-#creates new file to serialise into pickle
+    # Create a file to serialize into pickle
     with open('dict.pickle', 'wb') as file:
-      pickle.dump(dictionary, file)
+        pickle.dump(dictionary, file)
 
-# Read the serialized data from the file
+    # Read the serialized data from the file
     with open('dict.pickle', 'rb') as file:
         serialised_data = file.read()
-      
-    # Serialize as JSON
-    #json_data = json.dumps(dictionary)
 
-    # Encrypt the JSON data
-    encrypted_data = cipher_suite.encrypt(serialised_data)
+    def encrypt(data, key):
+        """
+        Given data (bytes) and key (bytes), it encrypts the data and returns it
+        """
+        f = Fernet(key)
+        encrypted_data = f.encrypt(data)
+        return encrypted_data
 
-    #send serialised dictionary to server
+    # Encrypt the serialized data
+    encrypted_data = encrypt(serialised_data, key)
 
+    # Send encrypted data to the server
     client_socket.send(encrypted_data)
 
     # Receive a response from the server
     response = client_socket.recv(1024)
-    print("Received response from server: {}".format(response.decode('utf-8')))
+    print(f"Message from server: {response.decode('utf-8')}")
+
+
 finally:
     # Clean up the connection
     client_socket.close()
-
-# End-of-file (EOF)
